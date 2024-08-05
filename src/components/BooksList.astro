@@ -4,30 +4,31 @@ import {getBooksList} from '../utils/api.js';
 import Card from '../components/Card.astro';
 
 const books = await getBooksList();
-console.log({books})
 
 ---
 
 <ul role="list" class="link-card-grid">
-            {
-                books.map(
-                    (book: any) => (
-                        <Card
-                            href={`/book/${book.key}`}
-                            title={book.title}
-                            body={book?.author_name || 'Unknown'}
-                        />
-                    )
+    {
+        books
+            ? books.map(
+                (book: any) => (
+                    <Card
+                        href={`/book/${book.key}`}
+                        title={book.title}
+                        body={book?.author_name || 'Unknown'}
+                    />
                 )
-            }
-		
-		</ul>
+            )
+            : <li>Parece que hay algún problema con los datos. Vuelve a cargar la página a ver...</li>
+    }
 
-        <style>
-            .link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 2rem;
-		padding: 0;
-	}
-        </style>
+</ul>
+
+<style>
+    .link-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+        gap: 2rem;
+        padding: 0;
+    }
+</style>
