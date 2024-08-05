@@ -1,0 +1,38 @@
+---
+    import Layout from '../../layouts/Layout.astro';
+    import { getBookByKey, getBookCoverByCoverId } from '../../utils/api.js';
+
+    const { book } = Astro.params;
+    
+    const bookData = await getBookByKey(book);
+    let cover = '';
+    console.log({ bookData });
+    if (bookData) {
+        cover = bookData?.covers && await getBookCoverByCoverId(bookData.covers[0]);
+        
+    }
+---
+
+<Layout title="Probando Astro con la api de open library">
+	<main>
+        <a href="/">Inicio</a>
+        {
+            bookData 
+                ? <h1>
+                    <span class="text-gradient">{bookData.title}</span>
+                </h1>
+                : <h1>Libro no encontrado</h1>
+        }
+        {
+            cover && 
+                <div>
+                    <img src={cover} alt=`Portada de ${bookData.title}` />
+                </div>
+        }
+        {
+            bookData.description 
+                ? <p>{ bookData.description.value || bookData.description }</p>
+                : <p>No hay descripción disponible.</p>
+        }
+    </main>
+</Layout>
