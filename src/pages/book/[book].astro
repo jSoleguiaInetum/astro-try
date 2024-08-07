@@ -2,11 +2,15 @@
     import Layout from '../../layouts/Layout.astro';
     import { getBookByKey, getBookCoverByCoverId } from '../../utils/api.js';
 
+    export const prerender =  false;
+
     const { book } = Astro.params;
     
     const bookData = await getBookByKey(book);
     let cover = '';
+    
     console.log({ bookData });
+
     if (bookData) {
         cover = bookData?.covers && await getBookCoverByCoverId(bookData.covers[0]);
         
