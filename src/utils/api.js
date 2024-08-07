@@ -1,8 +1,8 @@
 const apiBaseUrl = 'https://openlibrary.org/';
 
-const getBooksList = async () => {
+const getBooksList = async (query) => {
 	const apiAction = 'search.json';
-	let apiParams = ['q=storm+front', 'limit=10', 'fields=key,title,author_name'];
+	let apiParams = [`q=${query}`, 'limit=10', 'fields=key,title,author_name'];
 	const apiCallUrl = `${apiBaseUrl}${apiAction}?${apiParams.join('&')}`;
 	let output = null;
 	try {
