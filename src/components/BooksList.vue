@@ -17,10 +17,7 @@
 	const handleSearch = async () => {
 		loading.value = true;
 		books.value = await getBooksList(searchQuery.value);
-		console.log(books.value);
-		setTimeout(() => {
-			loading.value = false;
-		}, 5000);
+		loading.value = false;
 	};
 
 	onMounted(() => {
