@@ -1,16 +1,34 @@
 ---
+import { SignIn, SignOut } from "auth-astro/components";
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
+
 import Layout from '../layouts/Layout.astro';
 import BooksList from '../components/BooksList.vue';
 
 ---
 
 <Layout title="Probando Astro con la API de open library">
-	
-		<h1>
-            <span class="text-gradient">Astro</span> + <span class="text-gradient">API OpenLibrary</span>
-        </h1>
-		
-        <BooksList query="Summer Knight" client:load />
+    
+    
+
+    <h1>
+        <span class="text-gradient">Astro</span> + <span class="text-gradient">API OpenLibrary</span>
+    </h1>
+    
+    {
+        session 
+            ? (
+                <p>Hola, {session.user?.email}</p>
+                <SignOut class="btn-signout">Cerrar sesión</Signout>
+                <BooksList query="Summer Knight" client:load />
+            ) : (
+                <SignIn provider="google" class="btn-signin">Iniciar sesión con Google</SignIn>
+            )
+            
+
+    }
+
 </Layout>
 
 
